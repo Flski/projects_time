@@ -36,3 +36,7 @@ CREATE TABLE IF NOT EXISTS time_logs (
     FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE
 );
 
+CREATE INDEX index_user_id ON projects(user_id);
+CREATE INDEX index_project_id ON tasks(project_id);
+CREATE INDEX index_task_id ON time_logs(task_id);
+CREATE UNIQUE INDEX index_login ON clients(login);
