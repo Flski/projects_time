@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS projects (
     description TEXT,
     status TEXT NOT NULL,
     created_at TEXT NOT NULL,
-    user_id INTEGER,
+    user_id INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES clients (id) ON DELETE CASCADE
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     description TEXT,
     status TEXT NOT NULL,
     created_at TEXT NOT NULL,
-    project_id INTEGER,
+    project_id INTEGER NOT NULL,
     FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE
 );
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS time_logs (
     datetime_end TEXT,
     comment TEXT,
     duration TEXT,
-    task_id INTEGER,
+    task_id INTEGER NOT NULL,
     FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE
 );
 
