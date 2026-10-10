@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     name TEXT NOT NULL,
     description TEXT,
     status TEXT NOT NULL,
+    created_at TEXT NOT NULL,
     project_id INTEGER,
     FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE
 );
