@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS time_logs (
     id INTEGER PRIMARY KEY CHECK(id>0),
     datetime_start TEXT NOT NULL CHECK(LENGTH(datetime_start)>=1 AND LENGTH(datetime_start)<=1000),
     datetime_end TEXT CHECK(LENGTH(datetime_end)>=1 AND LENGTH(datetime_end)<=1000),
-    comment TEXT CHECK(LENGTH(comment)>=1 AND LENGTH(comment)<=10000),
+    comment TEXT NOT NULL CHECK(comment in ('start', 'stop')),
     duration TEXT CHECK(LENGTH(duration)>=1 AND LENGTH(duration)<=1000),
     task_id INTEGER NOT NULL CHECK(task_id>0),
     FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE
