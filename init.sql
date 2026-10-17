@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS projects (
     description TEXT CHECK(LENGTH(description)>=1 AND LENGTH(description)<=10000),
     status TEXT NOT NULL CHECK(status in ('active', 'completed')),
     created_at TEXT NOT NULL CHECK(LENGTH(created_at)>=1 AND LENGTH(created_at)<=1000),
-    user_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL CHECK(user_id>0),
     FOREIGN KEY (user_id) REFERENCES clients (id) ON DELETE CASCADE
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     description TEXT CHECK(LENGTH(description)>=1 AND LENGTH(description)<=10000),
     status TEXT NOT NULL CHECK(status in ('passive', 'start', 'pause', 'stop')),
     created_at TEXT NOT NULL CHECK(LENGTH(created_at)>=1 AND LENGTH(created_at)<=1000),
-    project_id INTEGER NOT NULL,
+    project_id INTEGER NOT NULL CHECK(project_id>0),
     FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS time_logs (
     datetime_end TEXT CHECK(LENGTH(datetime_end)>=1 AND LENGTH(datetime_end)<=1000),
     comment TEXT CHECK(LENGTH(comment)>=1 AND LENGTH(comment)<=10000),
     duration TEXT CHECK(LENGTH(duration)>=1 AND LENGTH(duration)<=1000),
-    task_id INTEGER NOT NULL,
+    task_id INTEGER NOT NULL CHECK(task_id>0),
     FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE
 );
 
