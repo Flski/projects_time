@@ -88,3 +88,17 @@ class DBProject:
                     return True
             return False
         except: return False
+
+    @classmethod
+    def join_projects_tasks(cls, user_id):
+        with session_factory() as session:
+            sql = text("""
+                SELECT projects.id, projects.name, projects.description, projects.status, projects.created_at,
+                projects.user_id, tasks.id, tasks.status
+                FROM projects
+                FULL JOIN tasks ON projects.id=tasks.project_id AND projects.user_id=:user_id;          
+             """)
+            query = session.execute(sql, {"user_id": user_id})
+            result = query.all()
+            if len(result)!=0: return result
+            else: return None

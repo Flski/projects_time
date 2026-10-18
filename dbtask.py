@@ -94,3 +94,16 @@ class DBTask:
             return False
         except:
             return False
+
+    @classmethod
+    def join_tasks_projects(cls, project_id):
+        with session_factory() as session:
+            sql = text("""
+            SELECT tasks.id, tasks.name, tasks.description, tasks.status, tasks.created_at, tasks.project_id, projects.id, projects.name
+            FROM tasks
+            FULL JOIN projects ON tasks.project_id=:project_id
+            """)
+            query = session.execute(sql, {"project_id": project_id})
+            result = query.all()
+            if len(result)!=0: return result
+            else: return None
