@@ -101,9 +101,28 @@ class DBTask:
             sql = text("""
             SELECT tasks.id, tasks.name, tasks.description, tasks.status, tasks.created_at, tasks.project_id, projects.id, projects.name
             FROM tasks
-            FULL JOIN projects ON tasks.project_id=:project_id
+            LEFT JOIN projects ON tasks.project_id=projects.id
+            WHERE tasks.project_id=:project_id
             """)
             query = session.execute(sql, {"project_id": project_id})
             result = query.all()
             if len(result)!=0: return result
             else: return None
+
+    @classmethod
+    def join_tasks_time_log(cls, project_id):
+        with session_factory() as session:
+            sql = text("""
+               SELECT tasks.id, tasks.name, tasks.description, tasks.status, tasks.created_at, tasks.project_id, 
+               time_logs.id, time_logs.datetime_start, time_logs.datetime_end, time_logs.comment, 
+               time_logs.duration, time_logs.task_id 
+               FROM tasks
+               LEFT JOIN time_logs ON tasks.id=time_logs.task_id
+               WHERE tasks.project_id=:project_id;
+               """)
+            query = session.execute(sql, {"project_id": project_id})
+            result = query.all()
+            if len(result) != 0:
+                return result
+            else:
+                return None

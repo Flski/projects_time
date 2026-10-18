@@ -88,18 +88,3 @@ class DBTimelog:
                     session.commit()
                     return True
         except: return False
-
-    @classmethod
-    def join_tasks_time_log(cls, project_id):
-        with session_factory() as session:
-            sql = text("""
-            SELECT tasks.id, tasks.name, tasks.description, tasks.status, tasks.created_at, tasks.project_id, 
-            time_logs.id, time_logs.datetime_start, time_logs.datetime_end, time_logs.comment, 
-            time_logs.duration, time_logs.task_id 
-            FROM tasks
-            FULL JOIN time_logs ON tasks.project_id=:project_id AND tasks.id=time_logs.task_id;
-            """)
-            query = session.execute(sql, {"project_id": project_id})
-            result = query.all()
-            if len(result)!=0: return result
-            else: return None

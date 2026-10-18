@@ -96,7 +96,8 @@ class DBProject:
                 SELECT projects.id, projects.name, projects.description, projects.status, projects.created_at,
                 projects.user_id, tasks.id, tasks.status
                 FROM projects
-                FULL JOIN tasks ON projects.id=tasks.project_id AND projects.user_id=:user_id;          
+                LEFT JOIN tasks ON projects.id=tasks.project_id
+                WHERE projects.user_id=:user_id;          
              """)
             query = session.execute(sql, {"user_id": user_id})
             result = query.all()
