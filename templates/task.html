@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задача</title>
+    <style>
+        body {
+            background: #F5F5F5;
+            color: #1A1A1A;
+            font-size: 17px;
+            font-family: Arial;
+        }
+        .nav {
+            background: white;
+            padding: 27px;
+            border-radius: 2px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .menu {
+            position: relative;
+            display: inline-block;
+        }
+        .menu::after {
+            position: absolute;
+            background: #366991;
+            content: "☰";
+            color: white;
+            width: 50px;
+            height: 42px;
+            top: -24px;
+            left: -10px;
+            font-size: 29px;
+            text-align: center;
+        }
+        .dropdown {
+            top: 17px;
+            left: -10px;
+            width: 190px;
+            position: absolute;
+            display: none;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 2px;
+        }
+        .dropdown a {
+            display: block;
+            padding: 7px;
+            color: #366991;
+        }
+        .menu:hover .dropdown {
+            display: inline-block;
+        }
+        .content {
+            justify-content: center;
+            text-align: left;
+            align-items: center;
+            display: flex;
+        }
+        .content h1 {
+            text-align: center;
+            font-size: 17px;
+            margin-bottom: 27px;
+            margin-top: 18px;
+        }
+        .task {
+            padding: 18px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: center;
+            width: 790px;
+            height: 690px;
+            margin: 70px;
+        }
+        .description {
+            resize: none;
+            border: 1px solid #1A1A1A;
+            width: 740px;
+            height: 390px;
+            background: white;
+        }
+        .delete , .update {
+            background: #366991;
+            color: white;
+            text-decoration: none;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <div class="menu">
+        <div class="dropdown">
+            <a href="/profile">Учётная запись</a>
+            <a href="/projects">Проекты</a>
+            <a href="/new_project">Новый проект</a>
+            <a href="/exit">Выйти из учётной записи</a>
+        </div>
+    </div>
+</nav>
+<div class="content">
+    <div class="task">
+    <h1>Задача</h1>
+        <p>Дата создания:</p>
+        <p>Статус:</p>
+        <p>Дата начала:</p>
+        <p>Дата завершения: </p>
+        <p>Описание:</p>
+        <textarea class="description" name="description" disabled></textarea>
+    <p><a href="/delete_task/1/1" class="delete">Удалить задачу</a>
+    <a href="/update_task/1/1" class="update">Изменить задачу</a>
+    </p>
+    </div>
+</div>
+</body>
+</html>
