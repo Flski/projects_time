@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Проекты</title>
+    <style>
+        body {
+            background: #F5F5F5;
+            color: #1A1A1A;
+            font-size: 17px;
+            font-family: Arial;
+        }
+        .nav {
+            background: white;
+            padding: 27px;
+            border-radius: 2px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .menu {
+            position: relative;
+            display: inline-block;
+        }
+        .menu::after {
+            position: absolute;
+            background: #366991;
+            content: "☰";
+            color: white;
+            width: 50px;
+            height: 42px;
+            top: -24px;
+            left: -10px;
+            font-size: 29px;
+            text-align: center;
+        }
+        .dropdown {
+            top: 17px;
+            left: -10px;
+            width: 190px;
+            position: absolute;
+            display: none;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 2px;
+        }
+        .dropdown a {
+            display: block;
+            padding: 7px;
+            color: #366991;
+        }
+        .menu:hover .dropdown {
+            display: inline-block;
+        }
+        .content h1 {
+            font-size: 17px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <div class="menu">
+        <div class="dropdown">
+            <a href="/profile">Учётная запись</a>
+            <a href="/projects">Проекты</a>
+            <a href="/new_project">Новый проект</a>
+            <a href="/exit">Выйти из учётной записи</a>
+        </div>
+    </div>
+</nav>
+<div class="content">
+    <h1>Проекты</h1>
+</div>
+</body>
+</html>
