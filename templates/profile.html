@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Учётная запись</title>
+    <style>
+        body {
+            background: #F5F5F5;
+            color: #1A1A1A;
+            font-size: 17px;
+            font-family: Arial;
+        }
+        .nav {
+            background: white;
+            padding: 27px;
+            border-radius: 2px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .menu {
+            position: relative;
+            display: inline-block;
+        }
+        .menu::after {
+            position: absolute;
+            background: #366991;
+            content: "☰";
+            color: white;
+            width: 50px;
+            height: 42px;
+            top: -24px;
+            left: -10px;
+            font-size: 29px;
+            text-align: center;
+        }
+        .dropdown {
+            top: 17px;
+            left: -10px;
+            width: 190px;
+            position: absolute;
+            display: none;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 2px;
+        }
+        .dropdown a {
+            display: block;
+            padding: 7px;
+            color: #366991;
+        }
+        .menu:hover .dropdown {
+            display: inline-block;
+        }
+        .content {
+            display: flex;
+            text-align: left;
+            justify-content: center;
+            align-items: center;
+        }
+        .profile {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 2px;
+            background: white;
+            width: 1400px;
+            height: 100px;
+            padding: 27px;
+            margin: 29px;
+        }
+        .profile h1 {
+            font-size: 17px;
+            text-align: center;
+        }
+        .delete , .update {
+            background: #366991;
+            color: white;
+            padding: 4px;
+            border: 1px solid #1A1A1A;
+            border: none;
+        }
+        .profile a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <div class="menu">
+        <div class="dropdown">
+            <a href="/profile">Учётная запись</a>
+            <a href="/projects">Проекты</a>
+            <a href="/new_project">Новый проект</a>
+            <a href="/exit">Выйти из учётной записи</a>
+        </div>
+    </div>
+</nav>
+<div class="content">
+    <div class="profile">
+    <h1>Учётная запись</h1>
+    <p>Логин: </p>
+    <p><a href="/update_psw/1" class="update">Изменить пароль</a>
+    <a href="/delete_profile/1" class="delete">Удалить профиль</a></p>
+    </div>
+</div>
+</body>
+</html>
