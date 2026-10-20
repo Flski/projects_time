@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение задачи</title>
+    <style>
+        body {
+            background: #F5F5F5;
+            color: #1A1A1A;
+            font-size: 17px;
+            font-family: Arial;
+        }
+        .nav {
+            background: white;
+            padding: 27px;
+            border-radius: 2px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .menu {
+            position: relative;
+            display: inline-block;
+        }
+        .menu::after {
+            position: absolute;
+            background: #366991;
+            content: "☰";
+            color: white;
+            width: 50px;
+            height: 42px;
+            top: -24px;
+            left: -10px;
+            font-size: 29px;
+            text-align: center;
+        }
+        .dropdown {
+            top: 17px;
+            left: -10px;
+            width: 190px;
+            position: absolute;
+            display: none;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 2px;
+        }
+        .dropdown a {
+            display: block;
+            padding: 7px;
+            color: #366991;
+        }
+        .menu:hover .dropdown {
+            display: inline-block;
+        }
+        .content {
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            display: flex;
+        }
+        .content h1 {
+            font-size: 17px;
+        }
+        form {
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: center;
+            width: 420px;
+            margin: 70px;
+        }
+        .name , .date, .datetime_end , datetime_start {
+            background: white;
+            border: 1px solid #1A1A1A;
+            padding: 7px;
+            width: 130px;
+            height: 10px;
+        }
+        .description {
+            resize: none;
+            background: white;
+            border: 1px solid #1A1A1A;
+            padding: 7px;
+            width: 270px;
+            height: 100px;
+        }
+        .button {
+            cursor: pointer;
+            background: #366991;
+            color: white;
+            width: 80px;
+            height: 24px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <div class="menu">
+        <div class="dropdown">
+            <a href="/profile">Учётная запись</a>
+            <a href="/projects">Проекты</a>
+            <a href="/new_project">Новый проект</a>
+            <a href="/exit">Выйти из учётной записи</a>
+        </div>
+    </div>
+</nav>
+<div class="content">
+    <form action="/update_task/1/1/1" method="POST">
+        <h1>Изменение задачи</h1>
+        <p><label>Название задачи: </label><input type="text" name="name" class="name" value="" required></p>
+        <textarea class="description" name="description">Описание: </textarea>
+        <p><label>Дата: </label><input type="text" name="date" class="date" value="ДД:ММ:ГГГГ ЧЧ:ММ"></p>
+        <p><label>Начало: </label><input type="text" name="dateime_start" class="datetime_start" value="ДД:ММ:ГГГГ ЧЧ:ММ"></p>
+        <p><label>Завершение: </label><input type="text" name="datetime_end" class="datetime_end" value="ДД:ММ:ГГГГ ЧЧ:ММ"></p>
+        <p><input type="submit" class="button" value="Изменить"></p>
+    </form>
+</div>
+</body>
+</html>
