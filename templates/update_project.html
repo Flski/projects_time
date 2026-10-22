@@ -105,9 +105,9 @@
 <div class="content">
     <form action="/update_project/1/1" method="POST">
         <h1>Изменение проекта</h1>
-        <p><label>Название проекта: </label><input type="text" name="name" class="name" value="" required></p>
-        <textarea class="description" name="description">Описание: </textarea>
-        <p><label>Дата: </label><input type="text" name="date" class="date" value="ДД:ММ:ГГГГ ЧЧ:ММ"></p>
+        <p><label>Название проекта: </label><input type="text" name="name" class="name" value="" maxlength="100" required></p>
+        <textarea class="description" name="description" maxlength="10000">Описание: </textarea>
+        <p><label>Дата: </label><input type="text" name="date" class="date" value="ДД:ММ:ГГГГ ЧЧ:ММ" maxlength="100"></p>
         <p><input type="submit" class="button" value="Изменить"></p>
     </form>
 </div>
