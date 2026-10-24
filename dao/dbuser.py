@@ -8,7 +8,7 @@ class DBUser:
             sql = text("SELECT id, login, password_hash FROM clients WHERE login=:login")
             query = session.execute(sql, {"login": login})
             res = query.first()
-            if len(res)!=0: return res
+            if res: return res
             else: return None
 
 
