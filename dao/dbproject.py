@@ -1,5 +1,5 @@
 from sqlalchemy import text
-from database import session_factory
+from dao.database import session_factory
 
 class DBProject:
     @classmethod
