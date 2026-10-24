@@ -8,7 +8,7 @@ def registration(login, password, password1):
         s = [i for i in password if i in ascii_lowercase+"йёцукенгшщзхъфывапролджэячсмитьбю"]
         d = [i for i in password if i in "0123456789"]
         if len(s) >= 1 and len(d) >= 1:
-            if not DBUser.get_user_by_login(login):
+            if not DBUser.get_user_by_login(login.strip()):
                 password_hash = generate_password_hash(password)
                 if DBUser.add_user(login, password_hash):
                     return {"registartion": True}
