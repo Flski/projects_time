@@ -1,7 +1,7 @@
-from dbuser import DBUser
-from dbproject import DBProject
-from dbtask import DBTask
-from dbtimelog import DBTimelog
+from dao.dbuser import DBUser
+from dao.dbproject import DBProject
+from dao.dbtask import DBTask
+from dao.dbtimelog import DBTimelog
 
 print(DBUser.add_user("Login232112313212112313132131", "password_hash131231323"))
 print(DBUser.get_user_by_login("Login232112313212112313132131"))
