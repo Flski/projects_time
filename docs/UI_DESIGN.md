@@ -209,7 +209,7 @@ URL: https://github.com/Flski/projects_time/blob/main/docs/update_password.png
 
 **3. Схема переходов (docs/ui_schema.png)**
 
-URL: https://github.com/Flski/projects_time/blob/main/docs/ui_schema.png
+URL: https://github.com/Flski/projects_time/blob/main/docs/schema.png
 
 **4. Сценарии взаимодействия**
 
