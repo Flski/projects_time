@@ -6,10 +6,11 @@ engine = create_engine(
     "sqlite:///"+os.path.join(os.path.abspath(os.path.dirname(__file__)), "projects.db"),
     connect_args={"check_same_thread": False}
 )
+
+with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), "init.sql"), "r", encoding="UTF-8") as file:
+    script = file.read()
+with engine.begin() as conn:
+    conn.connection.executescript(script)
+
 session_factory = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
-if "projects.db" not in os.listdir(os.path.abspath(os.path.dirname(__file__))):
-    with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), "init.sql"), "r", encoding="UTF-8") as file:
-        script = file.read()
-    with engine.begin() as conn:
-        conn.connection.executescript(script)

@@ -14,7 +14,7 @@ class DBProject:
     @classmethod
     def get_project_by_id(cls, id):
         with session_factory() as session:
-            sql = text("SELECT id, name, description, status, created_at FROM projects WHERE id=:id")
+            sql = text("SELECT id, name, description, status, created_at, user_id FROM projects WHERE id=:id")
             query = session.execute(sql, {"id": id})
             result = query.first()
             if result: return result
@@ -67,26 +67,23 @@ class DBProject:
                         sql = text("UPDATE projects SET name=:name WHERE id=:id")
                         session.execute(sql, {"name": dct.get("name"), "id": id})
                         session.commit()
-                        return True
+                    else: return False
             if dct.get("status"):
                 with session_factory() as session:
                     sql = text("UPDATE projects SET status=:status WHERE id=:id")
                     session.execute(sql, {"status": dct.get("status"), "id": id})
                     session.commit()
-                    return True
             if dct.get("description"):
                 with session_factory() as session:
                     sql = text("UPDATE projects SET description=:description WHERE id=:id")
                     session.execute(sql, {"description": dct.get("description"), "id": id})
                     session.commit()
-                    return True
             if dct.get("created_at"):
                 with session_factory() as session:
                     sql = text("UPDATE projects SET created_at=:created_at WHERE id=:id")
                     session.execute(sql, {"created_at": dct.get("created_at"), "id": id})
                     session.commit()
-                    return True
-            return False
+            return True
         except: return False
 
     @classmethod
