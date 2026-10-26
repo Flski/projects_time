@@ -209,6 +209,8 @@ URL: https://github.com/Flski/projects_time/blob/main/docs/update_password.png
 
 -Реакция системы: обработка POST-запроса, при прохождении валидации введенных данных изменение пароля с сообщением о изменении, иначе вывод сообщение о ошибке изменения пароля учётной записи.
 
+**2.13. Страница удаления учётной записи (docs/delete_profile.png)**
+
 **3. Схема переходов (docs/ui_schema.png)**
 
 URL: https://github.com/Flski/projects_time/blob/main/docs/schema.png
