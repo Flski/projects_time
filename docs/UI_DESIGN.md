@@ -211,6 +211,9 @@ URL: https://github.com/Flski/projects_time/blob/main/docs/update_password.png
 
 **2.13. Страница удаления учётной записи (docs/delete_profile.png)**
 
+URL: https://github.com/Flski/projects_time/blob/main/docs/delete_profile.png
+
+
 **3. Схема переходов (docs/ui_schema.png)**
 
 URL: https://github.com/Flski/projects_time/blob/main/docs/schema.png
