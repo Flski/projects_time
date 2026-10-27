@@ -26,7 +26,7 @@ def add_project(login, name, description, created_at):
             except: return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
         else: created_at_ = datetime.datetime.now()
         user_id = (DBUser.get_user_by_login(login))[0]
-        if DBProject.add_project({"name": name, "description": description, "created_at": str(created_at_),
+        if DBProject.add_project({"name": name.strip(), "description": description, "created_at": str(created_at_),
             "user_id": user_id}):
             return {"new_project": True}
         else:
@@ -63,7 +63,7 @@ def update_project(login, id, name, description, created_at):
                         return {"error": "Дата должна удовлетворять формату : ДД:ММ:ГГГГ ЧЧ:ММ"}
             except: return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
         else: created_at_ = datetime.datetime.now()
-        if DBProject.update_project_by_id(id, {"name": name, "description": description, "created_at": str(created_at_),
+        if DBProject.update_project_by_id(id, {"name": name.strip(), "description": description, "created_at": str(created_at_),
             "user_id": user[0]}):
             return {"update_project": True}
         else:
