@@ -42,7 +42,7 @@ class DBUser:
                 return True
             except: return False
 
-     @classmethod
+    @classmethod
     def update_user_by_id1(cls, id, login):
         with session_factory() as session:
             try:
