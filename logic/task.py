@@ -81,10 +81,11 @@ def add_task(login, project_id, name, description, created_at, datetime_start, d
                         )
                         if datetime.datetime.fromisoformat(date) >= datetime.datetime.now():
                             return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
-                        dct["created_at_"] = datetime.datetime.fromisoformat(date)
+                        dct["created_at_"] = str(datetime.datetime.fromisoformat(date))
                     else:
                         return {"error": "Дата должна удовлетворять формату : ДД:ММ:ГГГГ ЧЧ:ММ"}
             except: return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
+          else: dct["created_at"] = str(datetime.datetime.now())[:16]
           if DBTask.add_task(dct):
             return True
           else: return {"error": "Ошибка создания задачи"}
