@@ -60,6 +60,7 @@ def add_task(login, project_id, name, description, created_at, datetime_start, d
       if user[0] == project[-1]:
         if name:
           dct = {}
+          dct["project_id"] = project[0]
           if len(name.strip) >= 1 and len(name.strip()) <= 100:
             dct["name"] = name.strip()
           else: return {"error": "Название задачи должно включать хотя 1 символ и не более 100"}
@@ -67,7 +68,26 @@ def add_task(login, project_id, name, description, created_at, datetime_start, d
             if len(description) >= 1 and len(description) <= 10000:
               dct["description"] = description
             else: return {"error": "Описание задачи должно включать хотя бы 1 символ и не более 10000 символов"}
-              
+          if created_at:
+            try:
+                if len(created_at):
+                    # ДД:ММ:ГГГГ ЧЧ:ММ
+                    date_list = [i for i in (created_at.replace(" ", ":")).split(":")]
+                    date_nums = [int(i) for i in (created_at.replace(" ", ":")).split(":")]
+                    if 0 < date_nums[0] <= 31 and 0 < date_nums[1] <= 12 and 1000 < date_nums[2] <= 7000 and \
+                        0 <= date_nums[3] <= 23 and 0 <= date_nums[3] <= 60:
+                        date = (date_list[2]+"-"+date_list[1]+"-"+date_list[0]+" "+
+                        date_list[-2]+":"+date_list[-1]
+                        )
+                        if datetime.datetime.fromisoformat(date) >= datetime.datetime.now():
+                            return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
+                        dct["created_at_"] = datetime.datetime.fromisoformat(date)
+                    else:
+                        return {"error": "Дата должна удовлетворять формату : ДД:ММ:ГГГГ ЧЧ:ММ"}
+            except: return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
+          if DBTask.add_task(dct):
+            return True
+          else: return {"error": "Ошибка создания задачи"}
         else: return {"error": "Название не должно быть пустым"}
       else: return {"error": "Проект не принадлежит пользователю"}
     else: return {"error": "Проекта не существует"}
