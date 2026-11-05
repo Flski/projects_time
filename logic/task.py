@@ -89,6 +89,7 @@ def add_task(login, project_id, name, description, created_at, datetime_start, d
           else: dct["created_at"] = str(datetime.datetime.now())[:16]
           #Дополнительные параметры (даты и время старта, завершения)
           if datetime_start:
+            dct1 = {}
             try:
                 if len(datetime_start) == 16:
                     # ДД:ММ:ГГГГ ЧЧ:ММ
@@ -99,16 +100,16 @@ def add_task(login, project_id, name, description, created_at, datetime_start, d
                         date1 = (date_list1[2]+"-"+date_list1[1]+"-"+date_list1[0]+" "+
                         date1_list[-2]+":"+date_list[-1]
                         )
-                        if datetime.datetime.fromisoformat(date1) >= datetime.datetime.now():
+                        if datetime.datetime.fromisoformat(date1) >= datetime.datetime.now() and datetime.datetime.fromisoformat(date) <= datetime.datetime.fromisoformat(date1):
                             return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
-                        dct["datetime_start"] = str(datetime.datetime.fromisoformat(date1))
+                        dct1["datetime_start"] = str(datetime.datetime.fromisoformat(date1))
                     else:
                         return {"error": "Дата должна удовлетворять формату : ДД:ММ:ГГГГ ЧЧ:ММ"}
-                    if datetime_stop:
-                      if len(datetime_stop) == 16:
+                    if datetime_end:
+                      if len(datetime_end) == 16:
                         # ДД:ММ:ГГГГ ЧЧ:ММ
-                        date_list2 = [i for i in (datetime_stop.replace(" ", ":")).split(":")]
-                        date_nums2 = [int(i) for i in (datetime_stop.replace(" ", ":")).split(":")]
+                        date_list2 = [i for i in (datetime_end.replace(" ", ":")).split(":")]
+                        date_nums2 = [int(i) for i in (datetime_end.replace(" ", ":")).split(":")]
                         if 0 < date_nums2[0] <= 31 and 0 < date_nums2[1] <= 12 and int(str(datetime.datetime.now())[:4]) == date_nums[2] and \
                           0 <= date_nums2[3] <= 23 and 0 <= date_nums2[3] <= 60:
                           date2 = (date_list2[2]+"-"+date_list2[1]+"-"+date_list2[0]+" "+
@@ -116,14 +117,21 @@ def add_task(login, project_id, name, description, created_at, datetime_start, d
                           )
                           if datetime.datetime.fromisoformat(date2) <= datetime.datetime.fromisoformat(date1):
                             return {"error": "Дата завершения должна быть больше или равной дате старта"}
-                          dct["datetime_stop"] = str(datetime.datetime.fromisoformat(date2))
+                          dct1["datetime_end"] = str(datetime.datetime.fromisoformat(date2))
                         else:
                           return {"error": "Дата должна удовлетворять формату : ДД:ММ:ГГГГ ЧЧ:ММ"}
+                    if DBTask.add_task(dct):
+                      if dct1.get("datetime_start") and dct1.get("datetime_end"):
+                        dct1["duration"] = datetime.datetime.fromisoformat(dct1.get("datetime_end")) - datetime.datetime.fromisoformat(dct1.get("datetime_start"))
+                      task_id = (DBTask.get_tasks_by_project_id(project[0]))[-1][0]
+                      dct1["task_id"] = task_id
+                      if DBTimelog.add_timelog(dct1):
+                        return True
+                    return {"error": "Ошибка создания"}
             except: return {"error": "Даты должны удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
-          else: datetime_start = str(datetime.datetime.now())[:16]
-          if DBTask.add_task(dct):
-            return True
-          else: return {"error": "Ошибка создания задачи"}
+          else:
+            if DBTask.add_task(dct):
+              return True
         else: return {"error": "Название не должно быть пустым"}
       else: return {"error": "Проект не принадлежит пользователю"}
     else: return {"error": "Проекта не существует"}
