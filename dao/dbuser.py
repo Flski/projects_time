@@ -42,3 +42,12 @@ class DBUser:
                 return True
             except: return False
 
+     @classmethod
+    def update_user_by_id1(cls, id, login):
+        with session_factory() as session:
+            try:
+                sql = text("UPDATE clients SET login=:login WHERE id=:id")
+                session.execute(sql, {"login": login, "id": id})
+                session.commit()
+                return True
+            except: return False
