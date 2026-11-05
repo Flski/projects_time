@@ -20,13 +20,13 @@ def add_project(login, name, description, created_at):
                         )
                         if datetime.datetime.fromisoformat(date) >= datetime.datetime.now():
                             return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
-                        created_at_ = datetime.datetime.fromisoformat(date)
+                        created_at_ = str(datetime.datetime.fromisoformat(date))
                     else:
                         return {"error": "Дата должна удовлетворять формату : ДД:ММ:ГГГГ ЧЧ:ММ"}
             except: return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
-        else: created_at_ = datetime.datetime.now()
+        else: created_at_ = str(datetime.datetime.now())[:16]
         user_id = (DBUser.get_user_by_login(login))[0]
-        if DBProject.add_project({"name": name.strip(), "description": description, "created_at": str(created_at_),
+        if DBProject.add_project({"name": name.strip(), "description": description, "created_at": created_at_,
             "user_id": user_id}):
             return {"new_project": True}
         else:
@@ -57,13 +57,13 @@ def update_project(login, id, name, description, created_at):
                         date_list[-2]+":"+date_list[-1]
                         )
                         if datetime.datetime.fromisoformat(date) >= datetime.datetime.now():
-                            return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
-                        created_at_ = datetime.datetime.fromisoformat(date)
+                            return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ и быть меньше или равной текущей"}
+                        created_at_ = str(datetime.datetime.fromisoformat(date))
                     else:
                         return {"error": "Дата должна удовлетворять формату : ДД:ММ:ГГГГ ЧЧ:ММ"}
             except: return {"error": "Дата должна удовлетворять формату: ДД:ММ:ГГГГ ЧЧ:ММ"}
-        else: created_at_ = datetime.datetime.now()
-        if DBProject.update_project_by_id(id, {"name": name.strip(), "description": description, "created_at": str(created_at_),
+        else: created_at_ = str(datetime.datetime.now())[:16]
+        if DBProject.update_project_by_id(id, {"name": name.strip(), "description": description, "created_at": created_at_,
             "user_id": user[0]}):
             return {"update_project": True}
         else:
