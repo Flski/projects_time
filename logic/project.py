@@ -13,7 +13,7 @@ def add_project(login, name, description, created_at):
                     # ДД:ММ:ГГГГ ЧЧ:ММ
                     date_list = [i for i in (created_at.replace(" ", ":")).split(":")]
                     date_nums = [int(i) for i in (created_at.replace(" ", ":")).split(":")]
-                    if 0 < date_nums[0] <= 31 and 0 < date_nums[1] <= 12 and 1000 < date_nums[2] <= 7000 and \
+                    if 0 < date_nums[0] <= 31 and 0 < date_nums[1] <= 12 and int(str(datetime.datetime.now())[:4]) == date_nums[2] and \
                         0 <= date_nums[3] <= 23 and 0 <= date_nums[3] <= 60:
                         date = (date_list[2]+"-"+date_list[1]+"-"+date_list[0]+" "+
                         date_list[-2]+":"+date_list[-1]
@@ -51,7 +51,7 @@ def update_project(login, id, name, description, created_at):
                     # ДД:ММ:ГГГГ ЧЧ:ММ
                     date_list = [i for i in (created_at.replace(" ", ":")).split(":")]
                     date_nums = [int(i) for i in (created_at.replace(" ", ":")).split(":")]
-                    if 0 < date_nums[0] <= 31 and 0 < date_nums[1] <= 12 and 1000 < date_nums[2] <= 7000 and \
+                    if 0 < date_nums[0] <= 31 and 0 < date_nums[1] <= 12 and int(str(datetime.datetime.now())[:4]) == date_nums[2] and \
                         0 <= date_nums[3] <= 23 and 0 <= date_nums[3] <= 60:
                         date = (date_list[2]+"-"+date_list[1]+"-"+date_list[0]+" "+
                         date_list[-2]+":"+date_list[-1]
