@@ -9,7 +9,7 @@ def add_project(login, name, description, created_at):
                 return {"error": "Описание не должно превышать 10000 символов"}
         if created_at:
             try:
-                if len(created_at) <= 16:
+                if len(created_at) == 16:
                     # ДД:ММ:ГГГГ ЧЧ:ММ
                     date_list = [i for i in (created_at.replace(" ", ":")).split(":")]
                     date_nums = [int(i) for i in (created_at.replace(" ", ":")).split(":")]
@@ -47,7 +47,7 @@ def update_project(login, id, name, description, created_at):
                 return {"error": "Описание не должно превышать 10000 символов"}
         if created_at:
             try:
-                if len(created_at) <= 16:
+                if len(created_at) == 16:
                     # ДД:ММ:ГГГГ ЧЧ:ММ
                     date_list = [i for i in (created_at.replace(" ", ":")).split(":")]
                     date_nums = [int(i) for i in (created_at.replace(" ", ":")).split(":")]
