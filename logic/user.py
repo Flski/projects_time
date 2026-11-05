@@ -17,6 +17,8 @@ def update_password(login, password, new_password):
                         hash = generate_password_hash(new_password.strip())
                         if DBUser.update_user_by_id(user[0], hash):
                             return {"update_password": True}
+                        else:
+                            return {"error": "Ошибка изменения пароля"}
                     else:
                         return {"error": "Неверный текущий пароль"}
                 else:
@@ -28,6 +30,19 @@ def update_password(login, password, new_password):
     else:
         return {"error": "Пользователя не существует"}
 
+def update_login(login, password, new_login):
+    user = DBUser.get_user_by_login1(login)
+    if user:
+        if len(password.strip()) >= 16 and len(npassword.strip()) <= 10000:
+            if check_password_hash(user[2], password.strip()):
+                if not DBUser.get_user_by_login(new_login):
+                    if DBUser.update_user_by_id1(user[0], new_login):
+                        return True
+                    else: return {"error": "Ошибка изменения логина"}
+                else: return {"error": "Логин занят"}
+            else: return {"error": "Неверный пароль"}
+        else: {"error": "Длина пароля должна быть не менее 16 символов"}
+
 def delete_user(login, password):
     user = DBUser.get_user_by_login(login.strip())
     if user:
@@ -35,6 +50,8 @@ def delete_user(login, password):
             if check_password_hash(user[-1], password.strip()):
                 if DBUser.delete_user_by_id(user[0]):
                     return {"delete_user": True}
+                else:
+                    return {"error": "Ошибка удаления учётной записи"}
             else:
                 return {"error": "Неверный пароль"}
         else: 
