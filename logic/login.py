@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def registration(login, password, password1):
     if len(login.strip()) >= 4 and len(login.strip() <= 100 and len(password.strip()) >= 16 and len(password.strip()) <= 10000 \
         and password == password1:
-        s = [i for i in password if i in ascii_lowercase+"йёцукенгшщзхъфывапролджэячсмитьбю"]
+        s = [i for i in password if i in ascii_lowercase+"йёцукенгшщзхъфывапролджэячсмитьбюabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZЙЁЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"]
         d = [i for i in password if i in "0123456789"]
         if len(s) >= 1 and len(d) >= 1:
             if not DBUser.get_user_by_login(login.strip()):
@@ -22,13 +22,18 @@ def registration(login, password, password1):
 def login(login, password):
     if len(login.strip()) >= 4 and len(password.strip()) >= 16\
     and len(login.strip()) <= 100 and len(password.strip()) <= 10000:
-        user = DBUser.get_user_by_login(login.strip())
-        if user:
-            if check_password_hash(user.password_hash, password.strip():
-                return {"login": True}
+        s = [i for i in password.strip() if i in ascii_lowercase+"йёцукенгшщзхъфывапролджэячсмитьбюabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZЙЁЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"]
+        d = [i for i in password.strip() if i in "0123456789"]
+        if len(s) >= 1 and len(d) >= 1:
+            user = DBUser.get_user_by_login(login.strip())
+            if user:
+                if check_password_hash(user.password_hash, password.strip():
+                    return {"login": True}
+                else:
+                    return {"error": "Неверный логин или пароль"}
             else:
                 return {"error": "Неверный логин или пароль"}
         else:
-            return {"error": "Неверный логин или пароль"}
+            return {"error": "Пароль должен содержать хотя бы одну букву и цифру одновременно"}
     else:
         return {"error": "Длина логина должна быть не менее 4 символов, длина пароля должна быть не менее 16 символов"}
