@@ -1,5 +1,3 @@
-PRAGMA foreign_keys=ON;
-
 CREATE TABLE IF NOT EXISTS clients (
     id INTEGER PRIMARY KEY CHECK(id>0),
     login TEXT NOT NULL CHECK(LENGTH(login)>=4 AND LENGTH(login)<=100),
