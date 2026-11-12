@@ -36,4 +36,4 @@ CREATE TABLE IF NOT EXISTS time_logs (
 
 CREATE INDEX IF NOT EXISTS index_login ON clients(login);
 CREATE INDEX IF NOT EXISTS index_project_id ON projects(id);
-CREATE INFEX IF NOT EXISTS index_task_id ON tasks(id);
+CREATE INDEX IF NOT EXISTS index_task_id ON tasks(id);

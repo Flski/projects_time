@@ -18,7 +18,7 @@ if "projects.db" not in os.listdir(dir_path):
 
 async_engine = create_async_engine("sqlite+aiosqlite:///"+os.path.join(dir_path, "projects.db"))
 
-sesion_factory = async_sessionmaker(bind=async_engine, autoflush=False, autocommit=False)
+session_factory = async_sessionmaker(bind=async_engine, autoflush=False, autocommit=False)
 
 async def foreign_keys():
     async with session_factory() as session:
