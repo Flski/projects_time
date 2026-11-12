@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<title>Создание проекта</title>
+<style>
+  body {
+    background: #FCFCFC;
+    color: #1A1A1A;
+    font-family: Arial;
+    font-size: 18px;
+  }
+  .nav {
+    background: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 37px;
+  }
+  .menu {
+    position: relative;
+    display: inline-block;
+  }
+  .menu::after {
+    position: absolute;
+    content: "☰";
+    color: #214E77;
+    font-size: 45px;
+    left: -15px;
+    top: -34px;
+  }
+  .dropdown {
+    display: none;
+    position: absolute;
+    background: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 7px;
+    width: 220px;
+    height: 150px;
+    left: -15px;
+    top: 24px;      
+  }
+  .dropdown a {
+    color: #214E77;
+    font-size: 18px;
+    display: block;
+    padding: 7px;
+    text-decoration: none;
+  }
+  .menu:hover .dropdown {
+    display: inline-block;
+  }
+  .content {
+    text-align: left;
+    margin-left: 7px;
+  }
+  .content h1 {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 35px;
+  }
+  .name , .datetime {
+    background: #FCFCFC;
+    color: #1A1A1A;
+    font-size: 18px;
+    width: 390px;
+    height: 42px;
+    border: 1px solid #1A1A1A;
+    border-radius: 4px;
+  }
+  .description {
+    background: #FCFCFC;
+    color: #1A1A1A;
+    font-size: 18px;
+    width: 390px;
+    height: 100px;
+    border: 1px solid #1A1A1A;
+    border-radius: 4px;
+    resize: none;
+  }
+  .button {
+    cursor: pointer;
+    background: #214E77;
+    color: #FFFFFF;
+    font-size: 18px;
+    width: 130px;
+    height: 35px;
+    margin-top: 1px;
+    margin-bottom: 0;
+    border: none;
+    border-radius: 4px;
+  }
+  .content a {
+    color: #214E77;
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="menu">
+    <div class="dropdown">
+      <a href="/profile/{{login}}">Учётная запись</a>
+      <a href="/projects/{{login}}">Проекты</a>
+      <a href="/add_project/{{login}}">Новый проект</a>
+      <a href="/exit/{{login}}">Выход</a>
+    </div>
+  </div>
+</nav>
+<div class="content">
+  <form action="/delete_project/{{login}}/{{project_name}}" method="POST">
+    <h1>Проект</h1>
+    <p>Название: {{name}}</p>
+    <p>Дата и время: {{datetime}}</p>
+    <p><textarea class="description" name="description" placeholder="Описание (до 10000 символов, не обязательно)" maxlength="10000">{{description}}</textarea></p>
+    <p><input type="submit" class="button" value="Удаление"></p>
+    <p><a href="/update_project/{{login}}/{{project_name}}"></a></p>
+  </form>
+</div>
+</body>
+</html>
