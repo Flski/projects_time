@@ -1,22 +1,22 @@
 from dao.dbuser import DBUser
 from werkzeug.security import check_password_hash, generate_password_hash
-from string import ascii_lowercase
 
 async def update_password(login, password, new_password):
     user = await DBUser.get_user_by_login(login.strip())
     if user:
-        if len(new_password.strip()) >= 16 and len(new_password.strip()) <= 10000\
-        and len(password.strip()) >= 16 and len(password.strip()) <= 10000:
-            s1 = [i for i in password.strip() if i in ascii_lowercase+"йёцукенгшщзхъфывапролджэячсмитьбю"]
+        if 16 <= len(new_password.strip()) <= 10000 and 16 <= len(password.strip()) <= 10000:
+            s1 = [i for i in password.strip() if i in "йёцукенгшщзхъфывапролджэячсмитьбюabcdefghijklmnopqrstuvwxyzA"
+            "BCDEFGHIJKLMNOPQRSTUVWXYZЙЁЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"]
             d1 = [i for i in password.strip() if i in "0123456789"]
-            s2 = [i for i in new_password.strip() if i in ascii_lowercase + "йёцукенгшщзхъфывапролджэячсмитьбю"]
+            s2 = [i for i in new_password.strip() if i in "йёцукенгшщзхъфывапролджэячсмитьбюabcdefghijklmnopqrstuvwxy"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZЙЁЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"]
             d2 = [i for i in new_password.strip() if i in "0123456789"]
             if len(s1) >= 1 and len(d1) >= 1 and len(s2) >= 1 and len(d2) >= 1:
                 if password.strip() != new_password.strip():
                     if check_password_hash(user[-1], password.strip()) and not check_password_hash(user[-1], new_password.strip()):
                         hash = generate_password_hash(new_password.strip())
                         if await DBUser.update_user_by_id(user[0], hash):
-                            return {"update_password": True}
+                            return True
                         else:
                             return {"error": "Ошибка изменения пароля"}
                     else:
@@ -31,10 +31,9 @@ async def update_password(login, password, new_password):
         return {"error": "Пользователя не существует"}
 
 async def update_login(login, password, new_login):
-    user = await DBUser.get_user_by_login1(login)
+    user = await DBUser.get_user_by_login(login)
     if user:
-        if len(password.strip()) >= 16 and len(password.strip()) <= 10000 and\
-        len(new_login.strip()) >= 4 and len(new_login.strip()) <= 100:
+        if 16 <= len(password.strip()) <= 10000 and 4 <= len(new_login.strip()) <= 100:
             if check_password_hash(user[2], password.strip()):
                 if not await DBUser.get_user_by_login(new_login.strip()):
                     if await DBUser.update_user_by_id1(user[0], new_login):
@@ -47,10 +46,10 @@ async def update_login(login, password, new_login):
 async def delete_user(login, password):
     user = await DBUser.get_user_by_login(login.strip())
     if user:
-        if len(password.strip()) >= 16 and len(password.strip()) <= 10000:
+        if 16 <= len(password.strip()) <= 10000:
             if check_password_hash(user[-1], password.strip()):
                 if await DBUser.delete_user_by_id(user[0]):
-                    return {"delete_user": True}
+                    return True
                 else:
                     return {"error": "Ошибка удаления учётной записи"}
             else:
