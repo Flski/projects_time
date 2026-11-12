@@ -12,10 +12,10 @@ class DBProject:
             else: return None
 
     @classmethod
-    def get_project_by_id(cls, id):
+    async def get_project_by_name(cls, name, user_id):
         async with session_factory() as session:
-            sql = text("SELECT id, name, description, created_at, user_id FROM projects WHERE id=:id")
-            query = await session.execute(sql, {"id": id})
+            sql = text("SELECT id, name, description, created_at, user_id FROM projects WHERE user_id=:user_id AND name=:name")
+            query = await session.execute(sql, {"user_id": user_id, "name": name})
             result = query.first()
             if result: return result
             else: return None
