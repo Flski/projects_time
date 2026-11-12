@@ -84,10 +84,8 @@
   <div class="menu">
     <div class="dropdown">
       <a href="/profile/{{login}}">Учётная запись</a>
-      <a href="/menu/{{login}}">Меню</a>
-      <a href="/add_dohod/{{login}}">Новый доход</a>
-      <a href="/add_rashod/{{login}}">Новый расход</a>
-      <a href="/history/{{login}}">История операций</a>
+      <a href="/projects/{{login}}">Проекты</a>
+      <a href="/add_project/{{login}}">Новый проект</a>
       <a href="/exit/{{login}}">Выход</a>
     </div>
   </div>
@@ -95,7 +93,7 @@
 <div class="content">
   <form action="/delete_profile/{{login}}" method="POST">
     <h1>Удаление профиля</h1>
-    <p><input type="password" class="password" name="password" value="" placeholder="Текущий пароль" maxlength="1000" required></p>
+    <p><input type="password" class="password" name="password" value="" placeholder="Текущий пароль" maxlength="10000" required></p>
     <p><input type="submit" class="button" value="Удаление"></p>
 </form>
 </div>
