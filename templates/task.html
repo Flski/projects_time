@@ -107,14 +107,14 @@
 </nav>
 <div class="content">
   <form action="/delete_task/{{login}}/{{project_name}}/{{task_name}}" method="POST">
-    <h1>Новая задача</h1>
+    <h1>Задача</h1>
     <p><input type="text" class="name" name="name" value="Название: {{name}}" disabled></p>
     <p><input type="text" class="created_at" name="created_at" value="Дата и время: {{created_at}}" disabled></p>
     <p><textarea class="description" name="description" disabled>Описание: {{description}}</textarea></p>
     <p><input type="text" class="datetime_start" name="datetime_start" value="Дата и время старта: {{datetime_start}}" disabled></p>
     <p><input type="text" class="datetime_end" name="datetime_end" value="Дата и время завершения: {{datetime_end}}" disabled></p>
     <p><input type="submit" class="button" value="Удаление"></p>
-    <p></p>
+    <p><a href="/update_task/{{login}}/{{project_name}}/{{task_name}}">Изменение задачи</p>
   </form>
 </div>
 </body>
