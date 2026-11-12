@@ -102,10 +102,10 @@
 </nav>
 <div class="content">
   <form action="/add_project/{{login}}" method="POST">
-    <h1>Создание проекта</h1>
+    <h1>Новый проект</h1>
     <p><input type="text" class="name" name="name" value="" placeholder="Название (от 4 до 100 символов)" maxlength="100" required></p>
     <p><input type="text" class="datetime" name="datetime" value="" placeholder="Дата ГГГГ:ММ:ДД ЧЧ:ММ (не обязательна)" maxlength="100"></p>
-    <p><textaerea class="description" name="description" value="" placeholder="Описание (до 10000 символов не обязательно)" maxlength="10000"></p>
+    <p><textarea class="description" name="description" value="" placeholder="Описание (до 10000 символов, не обязательно)" maxlength="10000"></textarea></p>
     <p><input type="submit" class="button" value="Создание"></p>
   </form>
 </div>
