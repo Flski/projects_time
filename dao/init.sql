@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS projects (
     id INTEGER PRIMARY KEY CHECK(id>0),
     name TEXT NOT NULL CHECK(LENGTH(name)>=1 AND LENGTH(name)<=100),
     description TEXT CHECK(LENGTH(description)>=1 AND LENGTH(description)<=10000),
-    status TEXT NOT NULL CHECK(status in ('active', 'completed')),
     created_at TEXT NOT NULL CHECK(LENGTH(created_at)>=1 AND LENGTH(created_at)<=1000),
     user_id INTEGER NOT NULL CHECK(user_id>0),
     FOREIGN KEY (user_id) REFERENCES clients (id) ON DELETE CASCADE
@@ -35,6 +34,6 @@ CREATE TABLE IF NOT EXISTS time_logs (
     FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE
 );
 
-CREATE INDEX IF NOT EXISTS index_user_id ON projects(user_id);
-CREATE INDEX IF NOT EXISTS index_project_id ON tasks(project_id);
-CREATE INDEX IF NOT EXISTS index_task_id ON time_logs(task_id);
+CREATE INDEX IF NOT EXISTS index_login ON clients(login);
+CREATE INDEX IF NOT EXISTS index_project_id ON projects(id);
+CREATE INFEX IF NOT EXISTS index_task_id ON tasks(id);
