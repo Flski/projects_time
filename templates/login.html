@@ -16,7 +16,7 @@
   form {
     background: #FFFFFF;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 20px;
+    border-radius: 24px;
     width: 420px;
     height: 340px;
     margin-top: -70px;
@@ -32,8 +32,11 @@
     font-size: 18px;
     width: 350px;
     height: 42px;
-    border: 1px solid #1A1A1A;
+    border: 1px solid #E0E0E0;
     border-radius: 4px;
+  }
+  .login:focus , .password:focus {
+    border-color: #214E77;
   }
   .button {
     cursor: pointer;
@@ -45,11 +48,15 @@
     margin-top: 1px;
     margin-bottom: 0;
     border: none;
-    border-radius:4px;
+    border-radius: 4px;
   }
   a {
     color: #214E77;
     font-size: 18px;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
   }
 </style>
 </head>
