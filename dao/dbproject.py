@@ -24,8 +24,9 @@ class DBProject:
     async def add_project(cls, dct):
         async with session_factory() as session:
             try:
-                if not await session.execute(text("SELECT name FROM projects WHERE name=:name AND user_id=:user_id"),\
-                {"name": dct["name"], "user_id": dct["user_id"]}).first():
+                found_project = await session.execute(text("SELECT name FROM projects WHERE name=:name AND user_id=:user_id"),\
+                {"name": dct["name"], "user_id": dct["user_id"]})
+                if not found_project.all():
                     if dct.get("description"):
                         sql = text(
                             """INSERT INTO projects(name, description, created_at, user_id)
@@ -60,10 +61,9 @@ class DBProject:
         try:
             if dct.get("name"):
                 async with session_factory() as session:
-                    query = await session.execute(text("SELECT user_id FROM projects WHERE id=:id"), {"id": id})
-                    user_id = query.first()
-                    if not session.execute(text("SELECT name FROM projects WHERE name=:name AND user_id=:user_id"), \
-                        {"name": dct.get("name"), "user_id": user_id[0]}).first():
+                    found_project = await session.execute(text("SELECT name FROM projects WHERE name=:name AND user_id=:user_id"), \
+                    {"name": dct["name"], "user_id": dct["user_id"]})
+                    if not found_project.all():
                         sql = text("UPDATE projects SET name=:name WHERE id=:id")
                         await session.execute(sql, {"name": dct.get("name"), "id": id})
                         await session.commit()
@@ -80,18 +80,3 @@ class DBProject:
                     await session.commit()
             return True
         except: return False
-
-    @classmethod
-    async def join_projects_tasks(cls, user_id):
-        async with session_factory() as session:
-            sql = text("""
-                SELECT projects.id, projects.name, projects.description, projects.created_at,
-                projects.user_id, tasks.id, tasks.status
-                FROM projects
-                JOIN tasks ON projects.id=tasks.project_id
-                WHERE projects.user_id=:user_id;          
-             """)
-            query = await session.execute(sql, {"user_id": user_id})
-            result = query.all()
-            if len(result)!=0: return result
-            else: return None

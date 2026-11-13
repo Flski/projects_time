@@ -96,20 +96,6 @@ class DBTask:
             return False
 
     @classmethod
-    async def join_tasks_projects(cls, project_id):
-        async with session_factory() as session:
-            sql = text("""
-            SELECT tasks.id, tasks.name, tasks.description, tasks.status, tasks.created_at, tasks.project_id, projects.id, projects.name
-            FROM tasks
-            JOIN projects ON tasks.project_id=projects.id
-            WHERE tasks.project_id=:project_id
-            """)
-            query = await session.execute(sql, {"project_id": project_id})
-            result = query.all()
-            if len(result)!=0: return result
-            else: return None
-
-    @classmethod
     def join_tasks_time_log(cls, project_id):
         with session_factory() as session:
             sql = text("""
