@@ -34,8 +34,18 @@ class DBTimelog:
         except: return False
 
     @classmethod
+    async def delete_time_logs_by_task_id(cls, task_id):
+        try:
+            async with session_factory() as session:
+                sql = text("DELETE FROM time_logs WHERE task_id=:task_id")
+                await session.execute(sql, {"task_id": task_id})
+                await session.commit()
+                return True
+        except: return False
+
+    @classmethod
     async def add_time_log(cls, dct):
-        # try:
+        try:
             if dct.get("datetime_start") and dct.get("datetime_end"):
                 async with session_factory() as session:
                     sql = text("""INSERT INTO time_logs (datetime_start, datetime_end, duration, task_id)
@@ -54,7 +64,7 @@ class DBTimelog:
                     "task_id": dct.get("task_id")})
                     await session.commit()
                     return True
-        # except: return False
+        except: return False
 
     @classmethod
     async def update_time_log_by_id(cls, id, dct):
