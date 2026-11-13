@@ -1,60 +1,102 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Регистрация</title>
 <style>
-  body {
-    background: #FCFCFC;
-    color: #1A1A1A;
-    font-family: Arial;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  form {
-    background: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 24px;
-    width: 430px;
-    height: 410px;
-    margin-top: -70px;
-  }
-  h1 {
-    font-size: 20px;
-    margin-top: 35px;
-    margin-bottom: 50px;
-  }
-  .login , .password , .password1 {
-    background: #FFFFFF;
-    color: #1A1A1A;
-    font-size: 18px;
-    width: 350px;
-    height: 42px;
-    border: 1px solid #E0E0E0;
-    border-radius: 4px;
-  }
-  .button {
-    cursor: pointer;
-    background: #214E77;
-    color: #FFFFFF;
-    font-size: 18px;
-    width: 350px;
-    height: 35px;
-    margin-top: 1px;
-    margin-bottom: 0;
-    border: none;
-    border-radius: 4px;
-  }
-  a {
-    color: #214E77;
-    font-size: 18px;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #F4F7FA 0%, #E8EEF5 100%);
+  color: #1A1A1A;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+form {
+  background: #FFFFFF;
+  box-shadow: 0 10px 25px rgba(33, 78, 119, 0.08);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #142B42;
+  margin-bottom: 12px;
+}
+
+.login, .password, .password1 {
+  background: #F9FAFB;
+  color: #1A1A1A;
+  font-size: 16px;
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.login:focus, .password:focus, .password1:focus {
+  background: #FFFFFF;
+  border-color: #214E77;
+  box-shadow: 0 0 0 3px rgba(33, 78, 119, 0.12);
+}
+
+.button {
+  cursor: pointer;
+  background: #214E77;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  height: 46px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.button:hover {
+  background: #183B5B;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+a {
+  color: #214E77;
+  font-size: 14px;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #183B5B;
+  text-decoration: underline;
+}
+
 </style>
 </head>
 <body>
