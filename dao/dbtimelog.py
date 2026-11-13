@@ -6,7 +6,7 @@ class DBTimelog:
     async def get_time_logs_by_task_id(cls, task_id):
         async with session_factory() as session:
             sql = text("SELECT * FROM time_logs WHERE task_id=:task_id")
-            await query = session.execute(sql, {"task_id": task_id})
+            query = await session.execute(sql, {"task_id": task_id})
             result = query.all()
             if len(result)!=0: return result
             else: return None
@@ -35,11 +35,11 @@ class DBTimelog:
 
     @classmethod
     async def add_time_log(cls, dct):
-        try:
+        # try:
             if dct.get("datetime_start") and dct.get("datetime_end"):
                 async with session_factory() as session:
-                    sql = text("""INSERT INTO time_logs (datetime_start, datetime_end, comment, duration, task_id)
-                    VALUES (:datetime_start, :datetime_end, 'stop', :duration, :task_id)                    
+                    sql = text("""INSERT INTO time_logs (datetime_start, datetime_end, duration, task_id)
+                    VALUES (:datetime_start, :datetime_end, :duration, :task_id)                    
                     """)
                     await session.execute(sql, {"datetime_start": dct.get("datetime_start"),
                     "datetime_end": dct.get("datetime_end"),
@@ -48,13 +48,13 @@ class DBTimelog:
                     return True
             if dct.get("datetime_start") and not dct.get("datetime_end"):
                 async with session_factory() as session:
-                    sql = text("""INSERT INTO time_logs (datetime_start, comment, task_id)
-                    VALUES (:datetime_start, 'start', :task_id)""")
+                    sql = text("""INSERT INTO time_logs (datetime_start, task_id)
+                    VALUES (:datetime_start, :task_id)""")
                     await session.execute(sql, {"datetime_start": dct.get("datetime_start"),
                     "task_id": dct.get("task_id")})
                     await session.commit()
                     return True
-        except: return False
+        # except: return False
 
     @classmethod
     async def update_time_log_by_id(cls, id, dct):
@@ -77,13 +77,6 @@ class DBTimelog:
                 async with session_factory() as session:
                     sql = text("UPDATE time_logs SET duration=:duration WHERE id=:id")
                     await session.execute(sql, {"duration": dct.get("duration"),
-                   "id": id})
-                    await session.commit()
-                    return True
-            if dct.get("comment"):
-                async with session_factory() as session:
-                    sql = text("UPDATE time_logs SET comment=:comment WHERE id=:id")
-                    await session.execute(sql, {"comment": dct.get("comment"),
                    "id": id})
                     await session.commit()
                     return True

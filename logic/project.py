@@ -61,7 +61,7 @@ async def add_project(login, name, created_at=None, description=None):
             else: return {"error": "Описание не должно превышать 10000 символов"}
         if await DBProject.add_project(dct):
             return True
-        else: return False
+        else: return {"error": "Проект с таким названием уже существует"}
     else: return {"error": "Название должно быть от 1 до 100 символов"}
 
 async def update_project(login, first_name, name=None, created_at=None, description=None):
@@ -93,4 +93,4 @@ async def update_project(login, first_name, name=None, created_at=None, descript
         else: return {"error": "Описание не должно превышать 10000 символов"}
     if await DBProject.update_project_by_id(project[0], dct):
         return True
-    else: return False
+    else: return {"error": "Проект с таким названием уже существует"}

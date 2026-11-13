@@ -12,13 +12,13 @@ class DBTask:
             else: return None
 
     @classmethod
-    async def get_task_by_id(cls, id):
+    async def get_task_by_name(cls, name, project_id):
         async with session_factory() as session:
             sql = text("""
                 SELECT id, name, description, status, created_at, project_id
-                FROM tasks WHERE id=:id
+                FROM tasks WHERE name=:name AND project_id=:project_id
             """)
-            query = await session.execute(sql, {"id": id})
+            query = await session.execute(sql, {"name": name, "project_id": project_id})
             result = query.first()
             if result: return result
             else: return None
@@ -37,8 +37,9 @@ class DBTask:
     async def add_task(cls, dct):
         async with session_factory() as session:
             try:
-                if not await session.execute(text("SELECT name FROM tasks WHERE name=:name AND project_id=:project_id"),\
-                    {"name": dct["name"], "project_id": dct["project_id"]}).first():
+                task_found = await session.execute(text("SELECT name FROM tasks WHERE name=:name AND project_id=:project_id"),\
+                {"name": dct["name"], "project_id": dct["project_id"]})
+                if not task_found.first():
                     if dct.get("description"):
                         sql = text(
                             """INSERT INTO tasks(name, description, status, created_at, project_id)
@@ -65,33 +66,29 @@ class DBTask:
         try:
             if dct.get("name"):
                 async with session_factory() as session:
-                    query = await session.execute(text("SELECT project_id FROM tasks WHERE id=:id"), {"id": id})
-                    project_id = query.first()
-                    if not await session.execute(text("SELECT name FROM tasks WHERE name=:name AND project_id=:project_id"),\
-                        {"name": dct.get("name"), "project_id": project_id[0]}).first():
+                    found_task = await session.execute(text("SELECT name FROM tasks WHERE name=:name AND project_id=:project_id"),\
+                    {"name": dct.get("name"), "project_id": dct.get("name")})
+                    if found_task:
                         sql = text("UPDATE tasks SET name=:name WHERE id=:id")
                         await session.execute(sql, {"name": dct.get("name"), "id": id})
                         await session.commit()
-                        return True
+                    else: return False
             if dct.get("status"):
                 async with session_factory() as session:
                     sql = text("UPDATE tasks SET status=:status WHERE id=:id")
                     await session.execute(sql, {"status": dct.get("status"), "id": id})
                     await session.commit()
-                    return True
             if dct.get("description"):
                 async with session_factory() as session:
                     sql = text("UPDATE tasks SET description=:description WHERE id=:id")
                     await session.execute(sql, {"description": dct.get("description"), "id": id})
                     await session.commit()
-                    return True
             if dct.get("created_at"):
                 async with session_factory() as session:
                     sql = text("UPDATE tasks SET created_at=:created_at WHERE id=:id")
                     await session.execute(sql, {"created_at": dct.get("created_at"), "id": id})
                     await session.commit()
-                    return True
-            return False
+            return True
         except:
             return False
 
@@ -103,7 +100,7 @@ class DBTask:
                time_logs.id, time_logs.datetime_start, time_logs.datetime_end, time_logs.comment, 
                time_logs.duration, time_logs.task_id 
                FROM tasks
-               LEFT JOIN time_logs ON tasks.id=time_logs.task_id
+               JOIN time_logs ON tasks.id=time_logs.task_id
                WHERE tasks.project_id=:project_id;
                """)
             query = session.execute(sql, {"project_id": project_id})
