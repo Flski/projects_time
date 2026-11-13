@@ -202,6 +202,7 @@ body {
 <div class="content">
   <form action="/delete_profile/{{login}}" method="POST">
     <h1>Удаление профиля</h1>
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
     <p><input type="password" class="password" name="password" value="" placeholder="Текущий пароль" maxlength="10000" required></p>
     <p><input type="submit" class="button" value="Удаление"></p>
 </form>
