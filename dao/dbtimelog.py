@@ -75,19 +75,17 @@ class DBTimelog:
                     await session.execute(sql, {"datetime_start": dct.get("datetime_start"),
                     "id": id})
                     await session.commit()
-                    return True
             if dct.get("datetime_end"):
                 async with session_factory() as session:
                     sql = text("UPDATE time_logs SET datetime_end=:datetime_end WHERE id=:id")
                     await session.execute(sql, {"datetime_end": dct.get("datetime_end"),
                     "id": id})
                     await session.commit()
-                    return True
             if dct.get("duration"):
                 async with session_factory() as session:
                     sql = text("UPDATE time_logs SET duration=:duration WHERE id=:id")
                     await session.execute(sql, {"duration": dct.get("duration"),
                    "id": id})
                     await session.commit()
-                    return True
+            return True
         except: return False
