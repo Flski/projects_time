@@ -492,6 +492,7 @@ form a.danger-link {
     max-width: 100%;
   }
 }
+
 </style>
 </head>
 <body>
@@ -508,11 +509,12 @@ form a.danger-link {
 <div class="content">
   <form action="/delete_project/{{login}}/{{project_name}}" method="POST">
     <h1>Проект</h1>
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
     <p><input type="text" class="name" name="name" value="Название: {{name}}" disabled></p>
     <p><input type="text" class="created_at" name="created_at" value="Дата и время: {{created_at}}" disabled></p>
     <p><textarea class="description" name="description" disabled>Описание: {{description}}</textarea></p>
     <p><input type="submit" class="button" value="Удаление"></p>
-    <p><a href="/upate_project/{{login}}/{{project_name}}">Изменение проекта</a></p>
+    <p><a href="/update_project/{{login}}/{{project_name}}">Изменение проекта</a></p>
   </form>
 </div>
 </body>

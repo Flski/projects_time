@@ -478,8 +478,9 @@ a:focus-visible {
   </div>
 </nav>
 <div class="content">
-  <form action="/update_project/{{login}}/" method="POST">
+  <form action="/update_project/{{login}}/{{project_name}}" method="POST">
     <h1>Изменение проекта</h1>
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
     <p><input type="text" class="name" name="name" value="{{name}}" placeholder="Название (от 4 до 100 символов)" maxlength="100" required></p>
     <p><input type="text" class="created_at" name="created_at" value="{{created_at}}" placeholder="Дата ГГГГ-ММ-ДД ЧЧ:ММ (не обязательна)" maxlength="100"></p>
     <p><textarea class="description" name="description" placeholder="Описание (до 10000 символов, не обязательно)" maxlength="10000">{{description}}</textarea></p>

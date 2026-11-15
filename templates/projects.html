@@ -526,6 +526,7 @@ ul:last-child {
     justify-content: flex-end;
   }
 }
+
 </style>
 </head>
 <body>
@@ -544,6 +545,7 @@ ul:last-child {
   {% if projects %}
   <ul>
     {% for i in projects %}
+    <li>Название: {{i[0][1]}}, Дата создания: {{i[0][3]}}, Статус: {{i[1]}} <a href="/project/{{login}}/{{i[0][1]}}">Просмотр и изменение</a></li>
     {% endfor %}
   </ul>
   {% endif %}

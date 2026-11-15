@@ -13,37 +13,33 @@ templates = Jinja2Templates(directory=os.path.join(os.path.dirname("main.py"), "
 
 @router.get("/profile/{login}", response_class=HTMLResponse)
 async def profile_g(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     return templates.TemplateResponse(name="profile.html", request=request, context={"login": user[1]})
 
 @router.get("/exit/{login}")
 async def exit_g(login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     response = RedirectResponse(url="/login", status_code=303)
     security.unset_access_cookies(response)
     return response
 
 @router.get("/update_password/{login}", response_class=HTMLResponse)
 async def update_password_g(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     csrf_token = request.cookies.get("csrf_access_token")
     return templates.TemplateResponse(name="update_password.html", request=request, context={"login": user[1], "csrf_token": csrf_token})
 
 @router.post("/update_password/{login}")
 async def update_password_p(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     form = await request.form()
     password = form.get("password")
     password1 = form.get("password1")
@@ -52,19 +48,17 @@ async def update_password_p(request: Request, login: str, data: TokenPayload=Dep
 
 @router.get("/update_login/{login}", response_class=HTMLResponse)
 async def update_login_g(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     csrf_token = request.cookies.get("csrf_access_token")
     return templates.TemplateResponse(name="update_login.html", request=request, context={"login": user[1], "csrf_token": csrf_token})
 
 @router.post("/update_login/{login}", response_class=HTMLResponse)
 async def update_login_p(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     form = await request.form()
     password = form.get("password")
     login_ = form.get("login")
@@ -79,19 +73,17 @@ async def update_login_p(request: Request, login: str, data: TokenPayload=Depend
 
 @router.get("/delete_profile/{login}", response_class=HTMLResponse)
 async def delete_profile_g(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     csrf_token = request.cookies.get("csrf_access_token")
     return templates.TemplateResponse(name="delete_profile.html", request=request, context={"login": user[1], "csrf_token": csrf_token})
 
 @router.post("/delete_profile/{login}", response_class=HTMLResponse)
 async def delete_profile_p(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
-    user = await DBUser.get_user_by_login(login)
-    if user:
-        if user[1] != data.sub: raise HTTPException(status_code=403, detail="No access")
-    else: raise HTTPException(status_code=403, detail="No access")
+    if login != data.sub: raise HTTPException(status_code=403, detail="No access")
+    user = await DBUser.get_user_by_login(data.sub)
+    if not user: raise HTTPException(status_code=403, detail="No access")
     form = await request.form()
     password = form.get("password")
     delete_profile_f = await delete_user(user[1], password)

@@ -12,10 +12,12 @@ async def get_projects(login):
         res = []
         for i in projects:
             tasks = await DBTask.get_tasks_by_project_id(i[0])
-            if len([i for i in tasks if i[3] in ('start', 'pause')]) > 0:
-               res.append([i, "Активный"])
-            if len([i for i in tasks if i[3] in ('passive', 'stop')]) == len(tasks):
-                res.append([i, "Пассивный"])
+            if tasks:
+                if len([i for i in tasks if i[3] in ('start', 'pause')]) > 0:
+                   res.append([i, "Активный"])
+                if len([i for i in tasks if i[3] in ('passive', 'stop')]) == len(tasks):
+                    res.append([i, "Пассивный"])
+            else: res.append([i, "Пассивный"])
         return res
 
 async def get_project(login, project_name):
