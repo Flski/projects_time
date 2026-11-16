@@ -332,6 +332,71 @@ body {
   border-top: 1px solid var(--divider-color);
   margin: 24px 0;
 }
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+ul:last-child {
+  margin-bottom: 0;
+}
+
+.content ul li {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.content ul li:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 6px 18px var(--shadow-color);
+}
+
+.content ul.list-plain li {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--divider-color);
+  border-radius: 0;
+  padding: 10px 4px;
+  box-shadow: none;
+}
+
+.content ul.list-plain li:last-child {
+  border-bottom: none;
+}
+
+.list-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.list-item-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.list-item-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.list-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 .alert {
   padding: 14px 18px;
@@ -500,8 +565,17 @@ body {
   .content h1 {
     font-size: 21px;
   }
-}
 
+  .content ul li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .list-item-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
 </style>
 </head>
 <body>
@@ -517,6 +591,15 @@ body {
 </nav>
 <div class="content">
   <h1>Задачи:</h1>
+  {% if tasks %}
+  <ul>
+    {% for i in tasks %}
+    <li>Название: {{i[1]}}, Дата создания: {{i[4]}}, Статус: {{i[3]}}
+    <a href="/task/{{login}}/{{project_name}}/{{i[1]}}">Просмотр и изменение</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 </div>
 </body>
 </html>

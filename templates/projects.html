@@ -328,7 +328,7 @@ ul:last-child {
   padding: 14px 18px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px;
   transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
@@ -545,7 +545,9 @@ ul:last-child {
   {% if projects %}
   <ul>
     {% for i in projects %}
-    <li>Название: {{i[0][1]}}, Дата создания: {{i[0][3]}}, Статус: {{i[1]}} <a href="/project/{{login}}/{{i[0][1]}}">Просмотр и изменение</a></li>
+    <li>Название: {{i[0][1]}}, Дата создания: {{i[0][3]}}, Статус: {{i[1]}}<a href="/project/{{login}}/{{i[0][1]}}">Просмотр и изменение</a>
+    <a href="/add_task/{{login}}/{{i[0][1]}}">Добавление задачи</a>
+    <a href="/tasks/{{login}}/{{i[0][1]}}">Задачи</a></li>
     {% endfor %}
   </ul>
   {% endif %}

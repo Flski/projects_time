@@ -19,7 +19,7 @@ async def get_task(login, project_name, task_name):
     project = await DBProject.get_project_by_name(project_name.strip(), user[0])
     if not project: return {"error": "Проекта не существует"}
     else:
-        task = await DBTask.get_task_by_name(project_name, task_name)
+        task = await DBTask.get_task_by_name(task_name.strip(), project[0])
         return task
 
 async def delete_task(login, project_name, task_name):
@@ -29,7 +29,7 @@ async def delete_task(login, project_name, task_name):
     if not project:
         return {"error": "Проекта не существует"}
     else:
-        task = await DBTask.get_task_by_name(project_name, task_name)
+        task = await DBTask.get_task_by_name(task_name.strip(), project[0])
         if task:
             if await DBTask.delete_task_by_id(task[0]):
                 return True
