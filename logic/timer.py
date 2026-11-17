@@ -64,7 +64,7 @@ async def stop(login, project_name, task_name):
                 timelogs = await DBTimelog.get_time_logs_by_task_id(task[0])
                 if timelogs:
                     last_timelog = timelogs[-1]
-                    if last_timelog[2]:
+                    if last_timelog[1] and not last_timelog[2]:
                         dct["datetime_end"] = str(datetime.datetime.now())[:16]
                         dct["duration"] = str(datetime.datetime.fromisoformat(dct.get("datetime_end")) - datetime.datetime.fromisoformat(last_timelog[1]))
                         await DBTimelog.update_time_log_by_id(last_timelog[0], dct)

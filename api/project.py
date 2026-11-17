@@ -5,6 +5,7 @@ from authx import TokenPayload
 import os
 from security import security
 from logic.project import get_projects, add_project, get_project, delete_project, update_project
+from logic.task import get_tasks
 from dao.dbuser import DBUser
 
 router = APIRouter(tags=["project"])
@@ -17,8 +18,16 @@ async def projects_g(request: Request, login: str, data: TokenPayload=Depends(se
     user = await DBUser.get_user_by_login(data.sub)
     if not user: raise HTTPException(status_code=403, detail="No access")
     projects = await get_projects(user[1])
+    projects1 = []
+    if projects:
+        for i in range(len(projects)):
+            tasks = await get_tasks(user[1], projects[i][0][1])
+            if tasks:
+                projects1.append([projects[i], True])
+            else:
+                projects1.append([projects[i], False])
     return templates.TemplateResponse(name="projects.html", request=request, context={"login": user[1],
-    "projects": projects})
+    "projects": projects1})
 
 @router.get("/add_project/{login}", response_class=HTMLResponse)
 async def add_project_g(request: Request, login: str, data: TokenPayload=Depends(security.access_token_required)):
@@ -51,7 +60,7 @@ async def project_g(request: Request, login: str, project_name: str, data: Token
     if type(project_f) != dict:
         csrf_token = request.cookies.get("csrf_access_token")
         return templates.TemplateResponse(name="project.html", request=request, context={"login": user[1], "name": project_f[1],
-        "description": project_f[2], "created_at": project_f[3], "project_name": project_f[1], "csrf_token": csrf_token})
+        "description": project_f[2] if project_f[2] != None else "", "created_at": project_f[3], "project_name": project_f[1], "csrf_token": csrf_token})
     else: raise HTTPException(status_code=404, detail="Not found")
 
 @router.post("/delete_project/{login}/{project_name}", response_class=HTMLResponse)
@@ -74,7 +83,7 @@ async def update_project_g(request: Request, login: str, project_name: str, data
     if type(project_f) != dict:
         csrf_token = request.cookies.get("csrf_access_token")
         return templates.TemplateResponse(name="update_project.html", request=request, context={"login": user[1], "name": project_f[1],
-        "description": project_f[2], "created_at": project_f[3], "project_name": project_f[1], "csrf_token": csrf_token})
+        "description": project_f[2] if project_f[2] != None else "", "created_at": project_f[3], "project_name": project_f[1], "csrf_token": csrf_token})
     else: raise HTTPException(status_code=404, detail="Not found")
 
 @router.post("/update_project/{login}/{project_name}", response_class=HTMLResponse)

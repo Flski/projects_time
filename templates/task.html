@@ -535,10 +535,31 @@ form a.danger-link {
     <p><input type="text" class="created_at" name="created_at" value="Дата и время: {{created_at}}" disabled></p>
     <p><input type="text" class="status" name="status" value="Статус: {{status}}" disabled></p>
     <p><textarea class="description" name="description" disabled>Описание: {{description}}</textarea></p>
-    <p><input type="text" class="datetime_start" name="datetime_start" value="Дата и время старта: {{datetime_start}}" disabled></p>
-    <p><input type="text" class="datetime_end" name="datetime_end" value="Дата и время завершения: {{datetime_end}}" disabled></p>
+    {% if datetime_start %}
+      <p><input type="text" class="datetime_start" name="datetime_start" value="Дата и время старта: {{datetime_start}}" disabled></p>
+    {% endif %}
+    {% if datetime_end %}
+      <p><input type="text" class="datetime_end" name="datetime_end" value="Дата и время завершения: {{datetime_end}}" disabled></p>
+    {% endif %}
+    {% if duration %}
+      <p><input type="text" class="duration" name="duration" value="Продолжительность: {{duration}}" disabled></p>
+    {% endif %}
     <p><input type="submit" class="button" value="Удаление"></p>
     <p><a href="/update_task/{{login}}/{{project_name}}/{{task_name}}">Изменение задачи</p>
+  </form>
+  <form action="/timer/{{login}}/{{project_name}}/{{task_name}}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+    {% if status == "passive" %}
+      <p><input type="submit" class="button" name="start" value="Старт"></p>
+    {% endif %}
+    {% if status == "start" %}
+      <p><input type="submit" class="button" name="pause" value="Пауза">
+      <input type="submit" class="button" name="stop" value="Завершить"></p>
+    {% endif %}
+    {% if status == "pause" %}
+      <p><input type="submit" class="button" name="start" value="Старт">
+      <input type="submit" class="button" name="stop" value="Завершить"></p>
+    {% endif %}
   </form>
 </div>
 </body>

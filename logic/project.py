@@ -74,25 +74,28 @@ async def update_project(login, first_name, name=None, created_at=None, descript
     dct = {}
     dct["user_id"] = user[0]
     if name:
-        if 1 <= len(name.strip()) <= 100:
-            dct["name"] = name.strip()
-        else: return {"error": ""}
+        if name.strip() != project[1]:
+            if 1 <= len(name.strip()) <= 100:
+                dct["name"] = name.strip()
+            else: return {"error": "Длина названия должна быть от 1 до 100 символов"}
     if created_at:
-        try:
-            datetime_now = str(datetime.datetime.now())[:16]
-            #2026-11-13 12:26
-            if int(created_at.strip()[:4]) <= int(datetime_now.strip()[:4]) \
-            and 1 <= int(created_at.strip()[5:7]) <= 12 and 1 <= int(created_at.strip()[8:10]) <= 31 and\
-            0 <= int(created_at.strip()[11:13]) <= 23 and 0<= int(created_at.strip()[14:]) <= 60:
-                if datetime.datetime.fromisoformat(created_at.strip()) <= datetime.datetime.now():
-                    dct["created_at"] = created_at.strip()
+        if created_at.strip() != project[3]:
+            try:
+                datetime_now = str(datetime.datetime.now())[:16]
+                #2026-11-13 12:26
+                if int(created_at.strip()[:4]) <= int(datetime_now.strip()[:4]) \
+                and 1 <= int(created_at.strip()[5:7]) <= 12 and 1 <= int(created_at.strip()[8:10]) <= 31 and\
+                0 <= int(created_at.strip()[11:13]) <= 23 and 0<= int(created_at.strip()[14:]) <= 60:
+                    if datetime.datetime.fromisoformat(created_at.strip()) <= datetime.datetime.now():
+                        dct["created_at"] = created_at.strip()
+                    else: return {"error": "Дата и время должны соответсвовать формату ГГГГ-ММ-ДД ЧЧ:ММ"}
                 else: return {"error": "Дата и время должны соответсвовать формату ГГГГ-ММ-ДД ЧЧ:ММ"}
-            else: return {"error": "Дата и время должны соответсвовать формату ГГГГ-ММ-ДД ЧЧ:ММ"}
-        except: return {"error": "Дата и время должны соответсвовать формату ГГГГ-ММ-ДД ЧЧ:ММ"}
+            except: return {"error": "Дата и время должны соответсвовать формату ГГГГ-ММ-ДД ЧЧ:ММ"}
     if description:
-        if len(description) <= 10000:
-            dct["description"] = description
-        else: return {"error": "Описание не должно превышать 10000 символов"}
+        if description != project[2]:
+            if len(description) <= 10000:
+                dct["description"] = description
+            else: return {"error": "Описание не должно превышать 10000 символов"}
     if await DBProject.update_project_by_id(project[0], dct):
         return True
     else: return {"error": "Проект с таким названием уже существует"}
