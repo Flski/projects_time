@@ -1,0 +1,10 @@
+fastapi
+pydantic-settings
+uvicorn
+python-multipart
+greenlet
+sqlalchemy
+aiosqlite
+jinja2
+authx
+werkzeug
